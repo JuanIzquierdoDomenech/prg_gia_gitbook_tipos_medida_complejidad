@@ -1,3 +1,24 @@
+---
+layout:
+  width: wide
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
+  tags:
+    visible: true
+  actions:
+    visible: true
+---
+
 # Construyendo y mostrando tablas de tiempos con la librería pandas
 
 Una vez que hemos medido los tiempos del algoritmo, la forma más habitual de presentar los datos recolectados es a través de una **tabla**, donde cada fila se corresponde con la talla del problema analizado y las columnas con los tiempos medidos (en la unidad escogida) para cada uno de los casos significativos evaluados.

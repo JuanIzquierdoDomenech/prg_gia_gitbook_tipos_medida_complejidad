@@ -1,3 +1,24 @@
+---
+layout:
+  width: wide
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
+  tags:
+    visible: true
+  actions:
+    visible: true
+---
+
 # Generando gráficas de tiempo con matplotlib
 
 Además de mostrar las tablas con resultados, la forma más reveladora de evaluar el coste temporal de un algoritmo empíricamente es generando una gráfica que represente la evolución del tiempo en relación a la talla del problema. Para ello, usaremos la librería estándar de representación de datos de Python: [**matplotlib**](https://matplotlib.org/).

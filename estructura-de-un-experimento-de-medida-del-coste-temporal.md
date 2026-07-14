@@ -1,3 +1,24 @@
+---
+layout:
+  width: wide
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
+  tags:
+    visible: true
+  actions:
+    visible: true
+---
+
 # Estructura de un experimento de medida del coste temporal
 
 El análisis empírico se realiza para constatar los resultados del análisis teórico. Al diseñar un experimento para medir tiempos empíricos, se deben tomar en consideración los siguientes aspectos fundamentales:
