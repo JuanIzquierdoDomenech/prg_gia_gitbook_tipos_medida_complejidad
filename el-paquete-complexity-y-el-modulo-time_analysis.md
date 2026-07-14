@@ -221,3 +221,5 @@ Probando plot guardando a fichero 'prueba.pdf'...
 {% hint style="info" %}
 Notad que estamos midiendo tiempos de una función que no hace nada (`pass`). En la gráfica estamos observando con bastante detalle el ruido de las mediciones de tiempo de dicha función, de coste constante.
 {% endhint %}
+
+<div><figure><img src=".gitbook/assets/test1.png" alt=""><figcaption></figcaption></figure> <figure><img src=".gitbook/assets/test2.png" alt=""><figcaption></figcaption></figure> <figure><img src=".gitbook/assets/test3.png" alt=""><figcaption></figcaption></figure></div>
