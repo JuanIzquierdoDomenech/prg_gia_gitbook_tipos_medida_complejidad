@@ -118,9 +118,9 @@ Mostrando gráfica del análisis temporal
 Evidentemente, tus tiempos de ejecución pueden diferir enormemente, ya que dependen de las capacidades del entorno de ejecución. Lo que no puede diferir es la tasa de crecimiento, como razonamos a continuación.
 {% endhint %}
 
-En cuanto a la gráfica generada, debería tener un aspecto similar a este:
+En cuanto a la gráfica generada, debería tener un aspecto similar a estas:
 
-FOTO
+<div><figure><img src=".gitbook/assets/line_1.png" alt=""><figcaption></figcaption></figure> <figure><img src=".gitbook/assets/line_2.png" alt=""><figcaption></figcaption></figure> <figure><img src=".gitbook/assets/line_3.png" alt=""><figcaption></figcaption></figure></div>
 
 {% hint style="warning" %}
 Si observas mucho "ruido" en las mediciones (lo verás claramente en la gráfica), prueba a aumentar el número de repeticiones a 1000 o incluso 10000.
