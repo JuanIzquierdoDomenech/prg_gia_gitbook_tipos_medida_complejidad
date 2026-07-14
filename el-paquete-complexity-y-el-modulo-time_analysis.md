@@ -20,3 +20,204 @@ Además de dichas propiedades, la clase implementará los siguientes métodos:
 
 ## Actividad 6: Creación del paquete complexity
 
+Al igual que hicimos con el paquete `algorithms`, vamos a crear el paquete `complexity` en el que se encontrará el módulo `time_analysis` con la implementación de la clase `TimeAnalysis`. Es buena práctica exponer la API pública de nuestro paquete en el fichero `__init__.py`.
+
+Crea el directorio `complexity`, y a continuación, crea con vim el fichero `complexity/__init__.py` y exporta explícitamente la clase `TimeAnalysis`:
+
+```python
+from .time_analysis import TimeAnalysis
+
+__all__ = [
+    'TimeAnalysis',
+]
+```
+
+***
+
+## Actividad 7: Implementación y depuración de la clase `TimeAnalysis`
+
+Implementa la clase `TimeAnalysis` en el fichero (módulo) `complexity/time_analysis.py`.
+
+Una vez lo tengas implementado, añade el siguiente fragmento de pruebas al final del fichero de tu módulo `time_analysis.py`:
+
+{% hint style="danger" icon="skull-crossbones" %}
+**NO MODIFICAR ESTE BLOQUE DE CÓDIGO PRINCIPAL**
+
+Su salida se podrá usar el día del examen para evaluaros.
+{% endhint %}
+
+<details>
+
+<summary>Código de test</summary>
+
+{% code title="" %}
+```python
+if __name__ == "__main__":
+    import sys
+
+    def dummy_alg(*args):
+        pass
+
+    def dummy_gen(n):
+        return (n,)
+
+    print("Probando validaciones...")
+    try:
+        TimeAnalysis(dummy_alg, case_generator=dummy_gen, best_generator=dummy_gen)
+    except ValueError as e:
+        print(f"  > ValueError OK: {e}")
+
+    try:
+        TimeAnalysis(dummy_alg, best_generator=dummy_gen)
+    except ValueError as e:
+        print(f"  > ValueError OK: {e}")
+
+    try:
+        TimeAnalysis(dummy_alg)
+    except ValueError as e:
+        print(f"  > ValueError OK: {e}")
+
+    try:
+        analysis = TimeAnalysis(
+            dummy_alg,
+            best_generator=dummy_gen,
+            average_generator=dummy_gen,
+            worst_generator=dummy_gen
+        )
+        print("  > Creación de clase con tres casos OK")
+    except Exception as e:
+        print(f"  > OJOOOOO! Error inesperado, revísalo: {e}")
+        sys.exit()
+
+    print("\nProbando show_table sin datos previos...")
+    try:
+        analysis.show_table()
+    except RuntimeError as e:
+        print(f"  > RuntimeError OK: {e}")
+
+    print("\nProbando plot sin datos previos...")
+    try:
+        analysis.plot()
+    except RuntimeError as e:
+        print(f"  > RuntimeError OK: {e}")
+
+    print("\nProbando run con tres casos...")
+    analysis.run([100, 200, 300, 400, 500], repetitions=10000)
+
+    print("\nProbando show_table...")
+    analysis.show_table()
+
+    try:
+        analysis = TimeAnalysis(
+            dummy_alg,
+            case_generator=dummy_gen
+        )
+        print("  > Creación de clase con un solo caso OK")
+    except Exception as e:
+        print(f"  > OJOOOOO! Error inesperado, revísalo: {e}")
+        sys.exit()
+
+    print("\nProbando run con un solo caso...")
+    analysis.run([100, 200, 300, 400, 500], repetitions=1000000)
+
+    print("\nProbando show_table...")
+    analysis.show_table()
+
+    print("\nProbando plot...")
+    analysis.plot()
+
+    print("\nProbando plot guardando a fichero 'prueba.pdf'...")
+    analysis.plot(filename='prueba.pdf')
+```
+{% endcode %}
+
+</details>
+
+Ejecuta el módulo para comprobar las validaciones de tu implementación:
+
+{% code title="" %}
+```bash
+python -m complexity.time_analysis
+```
+{% endcode %}
+
+Deberás obtener un comportamiento donde todas las excepciones han sido correctamente capturadas, equivalente a esto:
+
+<details>
+
+<summary>Salida esperada</summary>
+
+{% code title="" %}
+```python
+Probando validaciones...
+  > ValueError OK: case_generator es incompatible con best_generator, average_generator y worst_generator.
+  > ValueError OK: Si se proporciona best_generator, también debe proporcionarse worst_generator.
+  > ValueError OK: Debe proporcionarse al menos case_generator o la pareja best_generator + worst_generator.
+  > Creación de clase con tres casos OK
+
+Probando show_table sin datos previos...
+  > RuntimeError OK: No hay mediciones. Ejecuta run() primero.
+
+Probando plot sin datos previos...
+  > RuntimeError OK: No hay mediciones. Ejecuta run() primero.
+
+Probando run con tres casos...
+Lanzando mediciones para el caso mejor.
+Medición para talla 100
+Medición para talla 200
+Medición para talla 300
+Medición para talla 400
+Medición para talla 500
+Lanzando mediciones para el caso promedio.
+Medición para talla 100
+Medición para talla 200
+Medición para talla 300
+Medición para talla 400
+Medición para talla 500
+Lanzando mediciones para el caso peor.
+Medición para talla 100
+Medición para talla 200
+Medición para talla 300
+Medición para talla 400
+Medición para talla 500
+
+Probando show_table...
+Tabla de tiempos (μs):
+       best  average  worst
+Talla                      
+100     0.2      0.2    0.2
+200     0.2      0.2    0.2
+300     0.2      0.2    0.2
+400     0.2      0.2    0.2
+500     0.2      0.2    0.2
+  > Creación de clase con un solo caso OK
+
+Probando run con un solo caso...
+Lanzando mediciones para el caso único.
+Medición para talla 100
+Medición para talla 200
+Medición para talla 300
+Medición para talla 400
+Medición para talla 500
+
+Probando show_table...
+Tabla de tiempos (μs):
+       average
+Talla         
+100        0.2
+200        0.2
+300        0.2
+400        0.2
+500        0.2
+
+Probando plot...
+
+Probando plot guardando a fichero 'prueba.pdf'...
+```
+{% endcode %}
+
+</details>
+
+{% hint style="info" %}
+Notad que estamos midiendo tiempos de una función que no hace nada (`pass`). En la gráfica estamos observando con bastante detalle el ruido de las mediciones de tiempo de dicha función, de coste constante.
+{% endhint %}

@@ -146,7 +146,7 @@ Finalmente, ubícate en la raíz de tu directorio p3 y ejecuta el módulo:
 
 {% code title="" %}
 ```bash
-python3 -m algorithms.linear_search
+python -m algorithms.linear_search
 ```
 {% endcode %}
 
