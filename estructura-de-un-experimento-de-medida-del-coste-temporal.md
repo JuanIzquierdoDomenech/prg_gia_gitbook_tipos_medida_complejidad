@@ -49,3 +49,25 @@ for _ in range(repeticiones):
 tiempo_promedio = total_ns / repeticiones
 ```
 {% endcode %}
+
+{% hint style="info" icon="puzzle-piece" %}
+**El algoritmo, los parámetros generados, y el operador de desempaquetado `*`**
+
+En el fragmento anterior, observarás la llamada `algoritmo(*parametros)`. Esta revela la **genericidad de nuestra aproximación**:
+
+* `algoritmo` es una variable que apunta al objeto función que implementa el algoritmo que estamos evaluando (sea el que sea).
+* `parametros` es una tupla que contiene los parámetros generados previamente por una función generadora de parámetros para la función `algoritmo` y para un caso particular.
+
+Como no se sabe de antemano cuántos argumentos necesita la función `algoritmo` (la búsqueda lineal necesita dos, pero otros podrían necesitar uno, o tres), y la función generadora de parámetros devuelve siempre una **tupla** con todos los argumentos necesarios, en la invocación de la función `algoritmo` aplicamos el operador asterisco `*` delante de la tupla `parametros`. De este modo, Python "desempaqueta" los elementos de la tupla y los pasa como argumentos individuales e independientes al algoritmo.
+
+Así, si `parametros` es una tupla de dos componentes con, p.ej., `([1, 2, 3], 5)`, la llamada `algoritmo(*parametros)` se convierte internamente en la llamada `algoritmo([1, 2, 3], 5)`.
+{% endhint %}
+
+Ahora bien, un factor crítico en el diseño experimental es **cuándo generar los parámetros de la función del algoritmo**:
+
+* **Casos deterministas (mejor y peor)**: La instancia que fuerza el caso mejor o peor para una talla concreta siempre es la misma. Por ejemplo, en la búsqueda lineal, el caso peor siempre es buscar un elemento que no existe. No tiene sentido volver a generar la misma lista una y otra vez dentro del bucle de repeticiones. Lo más eficiente (para no contaminar los tiempos con el coste de generación de memoria) es generar los parámetros **una sola vez**, _fuera_ del bucle de repeticiones.
+* **Casos aleatorios (promedio o único)**: El caso promedio o el comportamiento general (para algoritmos sin diferentes instancias) implica ejecutar el algoritmo para una **instancia típica o escogida al azar**. Si generásemos la instancia fuera del bucle, estaríamos repitiendo miles de veces la ejecución _exactamente sobre la misma instancia_, lo que sesgaría el tiempo promedio y dejaría de ser representativo. Por tanto, para estos casos es obligatorio invocar a la función generadora de parámetros **dentro** del bucle de repeticiones, proveyendo una nueva muestra aleatoria en cada iteración.
+
+{% hint style="warning" icon="hourglass-clock" %}
+Notar que `perf_counter_ns` solo debe envolver al algoritmo; no debemos "cronometrar" el tiempo (coste) de la generación de parámetros.
+{% endhint %}
