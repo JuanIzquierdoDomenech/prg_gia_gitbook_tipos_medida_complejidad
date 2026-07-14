@@ -125,7 +125,7 @@ if __name__ == "__main__":
     
     # Prueba caso mejor
     params_best = linear_search_generate_best(talla)
-    idx_best = linear_search(*params_best)
+    idx_best = linear_search(*params_best) # equivalente a linear_search(params_best[0],params_best[1])
     print(f"Caso mejor (talla {talla})  -> params: {params_best}, idx: {idx_best}")
 
     # Prueba caso peor
