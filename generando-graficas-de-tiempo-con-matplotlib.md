@@ -55,3 +55,7 @@ Comprueba que en el directorio local de trabajo ha aparecido el fichero `test_pl
 Al abrirlo, observarás el resultado empírico y visual de los tiempos en cada uno de los casos.
 
 <figure><img src=".gitbook/assets/test_plot.png" alt=""><figcaption></figcaption></figure>
+
+#### Infografía
+
+<figure><img src=".gitbook/assets/matplot.png" alt=""><figcaption></figcaption></figure>

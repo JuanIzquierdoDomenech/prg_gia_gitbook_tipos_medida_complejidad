@@ -60,4 +60,6 @@ Talla
 
 Como puedes observar, la librería `pandas` alinea y formatea las columnas de forma automática y transparente.
 
+#### Infografía
+
 <figure><img src=".gitbook/assets/pd.png" alt=""><figcaption></figcaption></figure>
