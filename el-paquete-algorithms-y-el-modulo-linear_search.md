@@ -60,11 +60,11 @@ Para algoritmos que **no** presenten instancias diferentes (es decir, donde cual
 
 ## Actividad 3: Funciones generadoras de parámetros de la búsqueda lineal
 
-Añade a tu módulo `linear_search.py` las tres funciones generadoras necesarias:
+Añade a tu módulo `linear_search.py` las tres funciones generadoras necesarias, las cuales devolverán una tupla `(lista_generada, elemento_a_buscar)`:
 
 1. `linear_search_generate_best(n)`: Para forzar el **caso mejor**, genera una lista de tamaño `n` (p.ej., con los números del `0` al `n-1`) y devuelve como segundo parámetro el **primer elemento** de la lista.
 2. `linear_search_generate_worst(n)`: Para forzar el **caso peor**, genera una lista de tamaño `n` y devuelve un elemento que **no esté en la lista** (p.ej., el `-1`).
-3. `linear_search_generate_average(n)`: Para evaluar el **caso promedio**, genera la misma lista, pero devuelve un elemento escogido al **azar** (usando la función [`randint()`](https://docs.python.org/es/3/library/random.html#random.randint) del módulo `random` de Python) de entre los que contiene la lista.
+3. `linear_search_generate_average(n)`: Para evaluar el **caso promedio**, genera la misma lista, pero devuelve un elemento escogido al **azar** (usando la función [`randint()`](https://docs.python.org/es/3/library/random.html#random.randint) del módulo `random` (que deberás importar) de Python) de entre los que contiene la lista.
 
 {% hint style="warning" icon="square-code" %}
 Notar que **las tres funciones devuelven una tupla con dos componentes**: una lista de enteros y un valor entero.
@@ -77,3 +77,96 @@ Recuerda que esas dos componentes serán los parámetros que se usarán, a poste
 ***
 
 ## Actividad 4: Exportación del módulo
+
+Para que el algoritmo y sus funciones generadoras de parámetros sean accesibles desde fuera del paquete `algorithms` de forma limpia (p.ej., `from algorithms import linear_search`), debemos exponerlos en el fichero `__init__.py` del paquete.
+
+Abre el fichero `algorithms/__init__.py` que creaste en la primera actividad e importa las funciones desde el módulo `linear_search`. Finalmente, usa la variable `__all__` para definir explícitamente la API pública del paquete:
+
+{% code title="" %}
+```python
+from .linear_search import (
+    linear_search,
+    linear_search_generate_best,
+    linear_search_generate_worst,
+    linear_search_generate_average,
+)
+
+__all__ = [
+    'linear_search',
+    'linear_search_generate_best',
+    'linear_search_generate_worst',
+    'linear_search_generate_average',
+]
+```
+{% endcode %}
+
+***
+
+Actividad 5: Depuración
+
+Añade el siguiente código **(SIN MODIFICAR)** al final del fichero `linear_search.py` para probar tu implementación.
+
+{% hint style="danger" icon="skull-crossbones" %}
+**NO MODIFICAR ESTE BLOQUE DE CÓDIGO PRINCIPAL**
+
+Su salida se podrá usar el día del examen para evaluaros.
+{% endhint %}
+
+<details>
+
+<summary>Código de test</summary>
+
+{% code title="" %}
+```python
+if __name__ == "__main__":
+    print("Probando linear_search...")
+    
+    talla = 10
+    
+    # Prueba caso mejor
+    params_best = linear_search_generate_best(talla)
+    idx_best = linear_search(*params_best)
+    print(f"Caso mejor (talla {talla})  -> params: {params_best}, idx: {idx_best}")
+
+    # Prueba caso peor
+    params_worst = linear_search_generate_worst(talla)
+    idx_worst = linear_search(*params_worst)
+    print(f"Caso peor (talla {talla})   -> params: {params_worst}, idx: {idx_worst}")
+
+    # Prueba caso promedio
+    params_avg = linear_search_generate_average(talla)
+    idx_avg = linear_search(*params_avg)
+    print(f"Caso promedio (talla {talla})-> params: {params_avg}, idx: {idx_avg}")
+```
+{% endcode %}
+
+</details>
+
+Finalmente, ubícate en la raíz de tu directorio p3 y ejecuta el módulo:
+
+{% code title="" %}
+```bash
+python3 -m algorithms.linear_search
+```
+{% endcode %}
+
+Deberías obtener una salida equivalente a esta:
+
+<details>
+
+<summary>Salida esperada</summary>
+
+{% code title="" %}
+```bash
+Probando linear_search...
+Caso mejor (talla 10)  -> params: ([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 0), idx: 0
+Caso peor (talla 10)   -> params: ([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], -1), idx: -1
+Caso promedio (talla 10)-> params: ([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 4), idx: 4
+```
+{% endcode %}
+
+</details>
+
+{% hint style="info" %}
+_(Nota: En el caso promedio, el número a buscar y su índice variarán aleatoriamente en cada ejecución; en cualquier caso deben coincidir el segundo parámetro y el valor de idx)._
+{% endhint %}
